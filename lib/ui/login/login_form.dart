@@ -2,8 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mskirana_app/utils/validator.dart';
 
-class LoginForm extends StatelessWidget {
+class LoginForm extends StatefulWidget {
+  final Function(String number) notifyParent;
+  LoginForm({Key key, @required this.notifyParent}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => LoginFormState();
+}
+
+class LoginFormState extends State<LoginForm> {
   final _formKey = GlobalKey<FormState>();
+  String phoneNumber = "";
 
   @override
   Widget build(BuildContext context) {
@@ -14,6 +23,7 @@ class LoginForm extends StatelessWidget {
             TextFormField(
               keyboardType: TextInputType.phone,
               validator: phoneNumberValidator,
+              onChanged: (value) => {phoneNumber = value},
               decoration: InputDecoration(
                   filled: true,
                   fillColor: Color(0XFFDBE7DB),
@@ -34,8 +44,9 @@ class LoginForm extends StatelessWidget {
                 height: 50,
                 child: RaisedButton(
                     onPressed: () {
+                      // if phone number is valid, notify parent!
                       if (_formKey.currentState.validate()) {
-                        Navigator.of(context).pushReplacementNamed('/home');
+                        widget.notifyParent(phoneNumber);
                       }
                     },
                     color: Color(0XFF9378FF),
