@@ -11,12 +11,17 @@ class HomeBottomAppBar extends StatelessWidget {
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               IconButton(
-                  icon: new Icon(MdiIcons.storeOutline, size: 36),
+                  icon: new Icon(MdiIcons.storeOutline,
+                      size: 36, color: Colors.purple[200]),
                   onPressed: () {}),
               IconButton(
-                  icon: new Icon(MdiIcons.cart, size: 36), onPressed: () {}),
+                  icon: new Icon(MdiIcons.cartOutline,
+                      size: 36, color: Colors.grey),
+                  onPressed: () {}),
               IconButton(
-                  icon: new Icon(MdiIcons.account, size: 36), onPressed: () {}),
+                  icon: new Icon(MdiIcons.accountOutline,
+                      size: 36, color: Colors.grey),
+                  onPressed: () {}),
             ]));
   }
 }

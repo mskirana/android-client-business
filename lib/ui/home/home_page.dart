@@ -29,13 +29,26 @@ class HomePageState extends State<HomePage> {
                           children: <TextSpan>[
                         TextSpan(
                             text:
-                                "Showing stores near your address - Microsoft Signature Building,... Bengaluru 560071. "),
+                                "Showing stores near your address - Microsoft Signature Bldg,... Bengaluru 560071. "),
                         TextSpan(
                             text: "Change?",
                             style:
                                 TextStyle(decoration: TextDecoration.underline))
                       ])),
-                  Expanded(child: HomeStoreView())
+                  Expanded(child: HomeStoreView()),
+                  Center(
+                      child: ButtonTheme(
+                          minWidth: 50,
+                          height: 20,
+                          padding: EdgeInsets.fromLTRB(60, 10, 60, 10),
+                          child: RaisedButton(
+                              onPressed: () {},
+                              color: Color(0XFF9378FF),
+                              child: Text('Next',
+                                  style: GoogleFonts.openSans(
+                                      color: Colors.white, fontSize: 24)),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(60)))))
                 ])));
   }
 }
