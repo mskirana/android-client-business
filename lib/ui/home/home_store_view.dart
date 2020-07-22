@@ -76,7 +76,9 @@ class HomeStoreViewState extends State<HomeStoreView> {
                 height: 20,
                 padding: EdgeInsets.fromLTRB(60, 10, 60, 10),
                 child: RaisedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/order');
+                    },
                     color: Color(0XFF9378FF),
                     child: Text('Next',
                         style: GoogleFonts.openSans(
