@@ -15,4 +15,8 @@ class Order {
         products: new List<Product>.from(
             json["products"].map((p) => Product.fromJson(p))));
   }
+
+  bool isActive() {
+    return !["delivered", "rejected"].contains(this.status);
+  }
 }

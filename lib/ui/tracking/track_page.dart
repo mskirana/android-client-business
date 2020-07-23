@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mskirana_app/config.dart';
 import 'package:mskirana_app/models/order.dart';
 import 'package:mskirana_app/ui/common/shared_bottom_bar.dart';
 import 'package:mskirana_app/ui/common/shimmer_card.dart';
@@ -22,6 +25,13 @@ class TrackPageState extends State<TrackPage> implements TrackContract {
     presenter.fetch();
   }
 
+  void subscribeToOrder(String orderId) {
+    Timer.periodic(new Duration(seconds: Config.refreshIntervalSeconds),
+        (timer) {
+      presenter.fetchOne(orderId);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,20 +47,15 @@ class TrackPageState extends State<TrackPage> implements TrackContract {
                     style: GoogleFonts.openSans(
                         fontSize: 36, fontWeight: FontWeight.bold)),
                 (firstFetch)
-                    ? TrackOrderView(orders
-                        .where((o) =>
-                            !["delivered", "rejected"].contains(o.status))
-                        .toList())
+                    ? TrackOrderView(orders.where((o) => o.isActive()).toList())
                     : ShimmerCard(),
                 Divider(),
                 Text("Past Order(s)",
                     style: GoogleFonts.openSans(
                         fontSize: 36, fontWeight: FontWeight.bold)),
                 (firstFetch)
-                    ? TrackOrderView(orders
-                        .where(
-                            (o) => ["delivered", "rejected"].contains(o.status))
-                        .toList())
+                    ? TrackOrderView(
+                        orders.where((o) => !o.isActive()).toList())
                     : ShimmerCard(),
               ],
             ))));
@@ -66,8 +71,24 @@ class TrackPageState extends State<TrackPage> implements TrackContract {
   void onFetchSuccess(List<Order> orders) {
     // update the orders
     setState(() {
-      this.firstFetch = true;
+      if (!this.firstFetch) {
+        this.firstFetch = true;
+        // subscribe to the active orders
+        orders.where((o) => o.isActive()).forEach((o) {
+          subscribeToOrder(o.id);
+        });
+      }
       this.orders = orders;
+    });
+  }
+
+  @override
+  void onFetchOneSuccess(Order order) {
+    setState(() {
+      // remove the old instance
+      this.orders.removeWhere((o) => o.id == order.id);
+      // add the new instance
+      this.orders.add(order);
     });
   }
 }

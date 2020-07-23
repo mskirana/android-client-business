@@ -15,4 +15,15 @@ class OrderRestClient {
       throw Exception("Failed to fetch orders");
     }
   }
+
+  /// fetch an order by Id
+  static Future<Order> fetchOrder(String orderId) async {
+    final response = await http.get(Config.apiUrl + "/order/" + orderId);
+
+    if (response.statusCode == 200) {
+      return Order.fromJson(json.decode(response.body));
+    } else {
+      throw Exception("Failed to fetch order " + orderId);
+    }
+  }
 }
