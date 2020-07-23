@@ -17,9 +17,9 @@ class OrderPageState extends State<OrderPage> {
   void saveOrder(context)
   {
       var products = keyItem.currentState.productsList;
-      // Navigator.push( context, MaterialPageRoute(
-      //   builder: (context) => ConfirmOrderPage(productsList : products),
-      // ));
+      Navigator.push( context, MaterialPageRoute(
+        builder: (context) => ConfirmOrderPage(productsList : products),
+      ));
   }
 
   @override
