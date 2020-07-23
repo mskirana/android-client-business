@@ -47,7 +47,7 @@ class HomeStoreCard extends Selectable {
                       ])),
                   if (super.selected)
                     Padding(
-                        padding: EdgeInsets.only(left: 16),
+                        padding: EdgeInsets.only(left: 16, right:8),
                         child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(about,
