@@ -8,8 +8,6 @@ class OrderRestClient {
   static Future<List<Order>> fetchOrders() async {
     final response = await http.get(Config.apiUrl + "/order");
 
-    print(response);
-
     if (response.statusCode == 200) {
       List orderList = json.decode(response.body);
       return orderList.map((o) => Order.fromJson(o)).toList();

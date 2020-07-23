@@ -10,7 +10,7 @@ class Order {
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
         id: json["_id"],
-        status: json["_status"],
+        status: json["status"],
         remarks: json["remarks"],
         products: new List<Product>.from(
             json["products"].map((p) => Product.fromJson(p))));

@@ -11,6 +11,10 @@ class Product {
       this.price = 0,
       this.available = false});
 
+  String toString() {
+    return title;
+  }
+
   factory Product.fromJson(Map<String, dynamic> json) {
     var p = Product(title: json["title"], quantity: json["quantity"]);
     if (json.containsKey("price")) p.price = json["price"];
