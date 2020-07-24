@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mskirana_app/ui/confirmorder/confirm_order_page.dart';
-import 'package:mskirana_app/ui/order/order_bottom_app_bar.dart';
+import 'package:mskirana_app/ui/common/shared_bottom_bar.dart';
 import 'package:mskirana_app/ui/order/order_item_view.dart';
 
 final keyItem = new GlobalKey<OrderItemViewState>();
@@ -25,7 +25,7 @@ class OrderPageState extends State<OrderPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: OrderBottomAppBar(),
+        bottomNavigationBar: SharedBottomBar(SharedBottomBarEnum.home),
         body: Padding(
             padding: const EdgeInsets.fromLTRB(10, 36, 10, 20),
             child: Column(

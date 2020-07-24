@@ -57,19 +57,21 @@ class OrderItemCardState extends State<OrderItemCard> {
       return ListTile(
           title: Row(
             children: <Widget>[
-              TextField(
+              Expanded(
+                  child: TextField(
                 controller: nameController,
                 decoration: InputDecoration(
                   labelText: 'Item',
                 ),
-              ),
+              )),
               Container(width: 16.0),
-              TextField(
+              Expanded(
+                  child: TextField(
                 controller: quantityController,
                 decoration: InputDecoration(
                   labelText: 'Quantity',
                 ),
-              ),
+              )),
             ],
           ),
           trailing: IconButton(
@@ -85,12 +87,16 @@ class OrderItemCardState extends State<OrderItemCard> {
       return ListTile(
         title: Row(
           children: <Widget>[
-            Text(loadElement['title'],
-                style: GoogleFonts.openSans(
-                    fontSize: 22, fontWeight: FontWeight.bold)),
-            Container(width: 50.0),
-            Text(loadElement['quantity'],
-                style: GoogleFonts.openSans(fontSize: 18, color: Colors.grey)),
+            Container(
+                width: 150,
+                child: Text(loadElement['title'],
+                    style: GoogleFonts.openSans(
+                        fontSize: 22, fontWeight: FontWeight.bold))),
+            Container(
+                width: 70,
+                child: Text(loadElement['quantity'],
+                    style: GoogleFonts.openSans(
+                        fontSize: 18, color: Colors.grey))),
           ],
         ),
         trailing: Row(mainAxisSize: MainAxisSize.min, children: <Widget>[

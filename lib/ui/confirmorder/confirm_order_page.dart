@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:mskirana_app/ui/confirmorder/confirm_order_bottom_app_bar.dart';
+import 'package:mskirana_app/models/order.dart';
+import 'package:mskirana_app/models/product.dart';
+import 'package:mskirana_app/ui/common/shared_bottom_bar.dart';
+import 'package:mskirana_app/ui/confirmorder/confirm_order_presenter.dart';
 import 'package:mskirana_app/ui/confirmorder/confirm_order_store_card.dart';
 import 'confirm_order_item_view.dart';
 
@@ -13,14 +16,30 @@ class ConfirmOrderPage extends StatefulWidget {
   ConfirmOrderPageState createState() => ConfirmOrderPageState();
 }
 
-class ConfirmOrderPageState extends State<ConfirmOrderPage> {
+class ConfirmOrderPageState extends State<ConfirmOrderPage>
+    implements ConfirmOrderContract {
+  final GlobalKey<ScaffoldState> scaffoldkey = new GlobalKey<ScaffoldState>();
   var callMeChkBox = true, reConfirmCheckBox = true;
   int _addressOption = 0;
+
+  void saveOrder(context) {
+    List<Product> products = new List<Product>();
+    widget.productsList
+        .forEach((element) => {products.add(Product.fromJson(element))});
+    Order order = new Order();
+    order.products = products;
+    //Create oder api call
+    ConfirmOrderPresenter presenter;
+    presenter = new ConfirmOrderPresenter(this);
+    presenter.create(order);
+  }
+
   @override
   Widget build(BuildContext context) {
     print(widget.productsList);
     return Scaffold(
-        bottomNavigationBar: ConfirmOrderBottomAppBar(),
+        key: scaffoldkey,
+        bottomNavigationBar: SharedBottomBar(SharedBottomBarEnum.home),
         body: SingleChildScrollView(
             child: Padding(
                 padding: const EdgeInsets.fromLTRB(10, 36, 10, 20),
@@ -57,8 +76,10 @@ class ConfirmOrderPageState extends State<ConfirmOrderPage> {
                                 value: 0,
                                 groupValue: _addressOption,
                                 onChanged: (int value) {
-                                    setState(() { _addressOption = 0; });
-                                  },
+                                  setState(() {
+                                    _addressOption = 0;
+                                  });
+                                },
                               ),
                               title: RichText(
                                   text: TextSpan(
@@ -71,15 +92,15 @@ class ConfirmOrderPageState extends State<ConfirmOrderPage> {
                           child: ListTile(
                               contentPadding: EdgeInsets.all(0),
                               leading: new Radio(
-                                value: 1,
-                                groupValue: _addressOption,
-                                onChanged: (int value) {
-                                    setState(() { _addressOption = 1; });
-                                  }
-                              ),
+                                  value: 1,
+                                  groupValue: _addressOption,
+                                  onChanged: (int value) {
+                                    setState(() {
+                                      _addressOption = 1;
+                                    });
+                                  }),
                               title: RichText(
                                   softWrap: true,
-                                  
                                   text: TextSpan(
                                       style: GoogleFonts.openSans(
                                           fontSize: 14,
@@ -100,9 +121,9 @@ class ConfirmOrderPageState extends State<ConfirmOrderPage> {
                           child: ListTile(
                               contentPadding: EdgeInsets.all(0),
                               leading: new Checkbox(
-                                  value: reConfirmCheckBox, 
+                                  value: reConfirmCheckBox,
                                   onChanged: (bool value) {
-                                    setState((){
+                                    setState(() {
                                       reConfirmCheckBox = value;
                                     });
                                   }),
@@ -112,15 +133,14 @@ class ConfirmOrderPageState extends State<ConfirmOrderPage> {
                                         fontSize: 14,
                                         color: Color(0XFF99879D),
                                       )))),
-                      
                       Container(
                           height: 30,
                           child: ListTile(
                               contentPadding: EdgeInsets.all(0),
                               leading: new Checkbox(
-                                  value: callMeChkBox, 
+                                  value: callMeChkBox,
                                   onChanged: (bool value) {
-                                    setState((){
+                                    setState(() {
                                       callMeChkBox = value;
                                     });
                                   }),
@@ -136,7 +156,7 @@ class ConfirmOrderPageState extends State<ConfirmOrderPage> {
                               padding: EdgeInsets.fromLTRB(60, 10, 60, 10),
                               child: RaisedButton(
                                   onPressed: () {
-                                    //saveOrder(context);
+                                    saveOrder(context);
                                   },
                                   color: Color(0XFF9378FF),
                                   child: Text('Confirm Order',
@@ -146,5 +166,17 @@ class ConfirmOrderPageState extends State<ConfirmOrderPage> {
                                       borderRadius:
                                           BorderRadius.circular(60)))))
                     ]))));
+  }
+
+  @override
+  void onCreateOrderError(String errorText) {
+    scaffoldkey.currentState.showSnackBar(SnackBar(
+        content: Text('Network error while trying to create your order')));
+  }
+
+  @override
+  void onCreateOrderSuccess(Order order) {
+    print(order);
+    //TODO : Navigate to the order details screen
   }
 }

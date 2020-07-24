@@ -26,4 +26,20 @@ class OrderRestClient {
       throw Exception("Failed to fetch order " + orderId);
     }
   }
+
+  static Future<Order> createOrder(Order order) async {
+    final body = json.encode(order.toJson());
+    final response = await http.post(Config.apiUrl + "/order/",
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+        },
+        body: body);
+
+    if (response.statusCode == 200) {
+      var result = json.decode(response.body);
+      return Order.fromJson(result["order"]);
+    } else {
+      throw Exception("Failed to create order ");
+    }
+  }
 }
