@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mskirana_app/ui/common/shared_bottom_bar.dart';
 import 'package:mskirana_app/ui/home/home_address_view.dart';
-import 'package:mskirana_app/ui/home/home_bottom_app_bar.dart';
 import 'package:mskirana_app/ui/home/home_store_view.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,7 +13,7 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: HomeBottomAppBar(),
+        bottomNavigationBar: SharedBottomBar(SharedBottomBarEnum.home),
         body: Padding(
             padding: const EdgeInsets.fromLTRB(10, 36, 10, 20),
             child: Column(
