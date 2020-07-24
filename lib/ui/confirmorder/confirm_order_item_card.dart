@@ -34,8 +34,7 @@ class ConfirmOrderItemCardState extends State<ConfirmOrderItemCard> {
 
 class ConfirmOrderItemCard extends StatefulWidget {
   final List<dynamic> productsList;
-  ConfirmOrderItemCard({Key key, @required this.productsList})
-      : super(key: key);
+  ConfirmOrderItemCard({@required this.productsList});
 
   @override
   ConfirmOrderItemCardState createState() => ConfirmOrderItemCardState();

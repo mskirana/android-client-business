@@ -7,8 +7,6 @@ import 'package:mskirana_app/ui/confirmorder/confirm_order_presenter.dart';
 import 'package:mskirana_app/ui/confirmorder/confirm_order_store_card.dart';
 import 'confirm_order_item_view.dart';
 
-final keyItem = new GlobalKey<ConfirmOrderItemViewState>();
-
 class ConfirmOrderPage extends StatefulWidget {
   final List<dynamic> productsList;
   ConfirmOrderPage({Key key, @required this.productsList}) : super(key: key);
@@ -19,8 +17,14 @@ class ConfirmOrderPage extends StatefulWidget {
 class ConfirmOrderPageState extends State<ConfirmOrderPage>
     implements ConfirmOrderContract {
   final GlobalKey<ScaffoldState> scaffoldkey = new GlobalKey<ScaffoldState>();
-  var callMeChkBox = true, reConfirmCheckBox = true;
+  var callMeCheckBox = true, reConfirmCheckBox = true;
   int _addressOption = 0;
+  ConfirmOrderPresenter presenter;
+
+  ConfirmOrderPageState()
+  {
+    presenter = new ConfirmOrderPresenter(this);
+  }
 
   void saveOrder(context) {
     List<Product> products = new List<Product>();
@@ -28,9 +32,7 @@ class ConfirmOrderPageState extends State<ConfirmOrderPage>
         .forEach((element) => {products.add(Product.fromJson(element))});
     Order order = new Order();
     order.products = products;
-    //Create oder api call
-    ConfirmOrderPresenter presenter;
-    presenter = new ConfirmOrderPresenter(this);
+    //Create Order api call
     presenter.create(order);
   }
 
@@ -57,8 +59,7 @@ class ConfirmOrderPageState extends State<ConfirmOrderPage>
                               children: <TextSpan>[
                             TextSpan(text: "Items ordered")
                           ])),
-                      ConfirmOrderItemView(
-                          key: keyItem, productsList: widget.productsList),
+                      ConfirmOrderItemView(productsList: widget.productsList),
                       Divider(thickness: 2),
                       RichText(
                           text: TextSpan(
@@ -138,10 +139,10 @@ class ConfirmOrderPageState extends State<ConfirmOrderPage>
                           child: ListTile(
                               contentPadding: EdgeInsets.all(0),
                               leading: new Checkbox(
-                                  value: callMeChkBox,
+                                  value: callMeCheckBox,
                                   onChanged: (bool value) {
                                     setState(() {
-                                      callMeChkBox = value;
+                                      callMeCheckBox = value;
                                     });
                                   }),
                               title: Text('Call me for any questions',
