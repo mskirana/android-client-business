@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:mskirana_app/common/selectable.dart';
+import 'package:mskirana_app/ui/common/store_call_row.dart';
 
 class HomeStoreCard extends Selectable {
   final String storeName, distance, type, about;
@@ -47,25 +47,12 @@ class HomeStoreCard extends Selectable {
                       ])),
                   if (super.selected)
                     Padding(
-                        padding: EdgeInsets.only(left: 16, right:8),
+                        padding: EdgeInsets.only(left: 16, right: 8),
                         child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(about,
                                 style: GoogleFonts.openSans(fontSize: 14)))),
-                  if (super.selected)
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          IconButton(
-                              icon: new Icon(MdiIcons.phoneOutline,
-                                  size: 24, color: Colors.blue),
-                              onPressed: () {}),
-                          Text(
-                            "Call " + storeName,
-                            style: GoogleFonts.openSans(
-                                fontSize: 18, color: Colors.blue),
-                          )
-                        ]),
+                  if (super.selected) StoreCallRow()
                 ]))));
   }
 }

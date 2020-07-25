@@ -6,8 +6,8 @@ import 'package:mskirana_app/config.dart';
 import 'package:mskirana_app/models/order.dart';
 import 'package:mskirana_app/ui/common/shared_bottom_bar.dart';
 import 'package:mskirana_app/ui/common/shimmer_card.dart';
-import 'package:mskirana_app/ui/tracking/track_order_view.dart';
-import 'package:mskirana_app/ui/tracking/track_presenter.dart';
+import 'package:mskirana_app/ui/tracking/track_main/track_orders_view.dart';
+import 'package:mskirana_app/ui/tracking/track_main/track_presenter.dart';
 
 class TrackPage extends StatefulWidget {
   @override
@@ -17,19 +17,39 @@ class TrackPage extends StatefulWidget {
 class TrackPageState extends State<TrackPage> implements TrackContract {
   final GlobalKey<ScaffoldState> scaffoldkey = new GlobalKey<ScaffoldState>();
   TrackPresenter presenter;
+
+  // runs a background service that updates the orders from subscription set
+  Timer asyncServiceTimer;
+
+  // set of orders that we are subscribed to
+  Set<String> subscription = new Set();
+
+  // list of all orders
   List<Order> orders = new List();
+
+  // have we fetched for the first time?
   bool firstFetch = false;
 
   TrackPageState() {
     presenter = new TrackPresenter(this);
     presenter.fetch();
+    // start a timer to update orders periodically
+    asyncServiceTimer = Timer.periodic(
+        new Duration(seconds: Config.refreshIntervalSeconds), (timer) {
+      subscription.forEach((id) {
+        presenter.fetchOne(id);
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    asyncServiceTimer.cancel();
+    super.dispose();
   }
 
   void subscribeToOrder(String orderId) {
-    Timer.periodic(new Duration(seconds: Config.refreshIntervalSeconds),
-        (timer) {
-      presenter.fetchOne(orderId);
-    });
+    subscription.add(orderId);
   }
 
   @override
@@ -47,14 +67,15 @@ class TrackPageState extends State<TrackPage> implements TrackContract {
                     style: GoogleFonts.openSans(
                         fontSize: 36, fontWeight: FontWeight.bold)),
                 (firstFetch)
-                    ? TrackOrderView(orders.where((o) => o.isActive()).toList())
+                    ? TrackOrdersView(
+                        orders.where((o) => o.isActive()).toList())
                     : ShimmerCard(),
                 Divider(),
                 Text("Past Order(s)",
                     style: GoogleFonts.openSans(
                         fontSize: 36, fontWeight: FontWeight.bold)),
                 (firstFetch)
-                    ? TrackOrderView(
+                    ? TrackOrdersView(
                         orders.where((o) => !o.isActive()).toList())
                     : ShimmerCard(),
               ],
@@ -85,10 +106,10 @@ class TrackPageState extends State<TrackPage> implements TrackContract {
   @override
   void onFetchOneSuccess(Order order) {
     setState(() {
-      // remove the old instance
-      this.orders.removeWhere((o) => o.id == order.id);
-      // add the new instance
-      this.orders.add(order);
+      // find location of old instance
+      int idx = this.orders.indexWhere((o) => o.id == order.id);
+      // update with new instance
+      this.orders.replaceRange(idx, idx + 1, [order]);
     });
   }
 }
