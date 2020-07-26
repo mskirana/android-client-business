@@ -9,7 +9,7 @@ class Product {
       {@required this.title,
       this.quantity,
       this.price = 0,
-      this.available = false});
+      this.available = true});
 
   String toString() {
     return title;
