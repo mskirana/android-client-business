@@ -5,7 +5,7 @@ class Order {
   String id, status, remarks;
   List<Product> products;
 
-  Order({@required this.id, this.status, this.remarks, this.products});
+  Order({this.id, this.status, this.remarks, this.products});
 
   factory Order.fromJson(Map<String, dynamic> json) {
     return Order(
@@ -14,6 +14,13 @@ class Order {
         remarks: json["remarks"],
         products: new List<Product>.from(
             json["products"].map((p) => Product.fromJson(p))));
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'remarks': remarks,
+      'products': products.map((p) => p.toJson()).toList()
+    };
   }
 
   bool isActive() {

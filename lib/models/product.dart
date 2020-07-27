@@ -21,4 +21,8 @@ class Product {
     if (json.containsKey("available")) p.available = json["available"];
     return p;
   }
+
+  Map<String, dynamic> toJson() {
+    return {'title': title, 'quantity': quantity};
+  }
 }

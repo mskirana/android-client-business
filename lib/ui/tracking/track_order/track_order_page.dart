@@ -131,7 +131,10 @@ class TrackOrderState extends State<TrackOrderPage>
             minWidth: 200,
             height: 50,
             child: RaisedButton(
-                onPressed: () {},
+                onPressed: () {
+                  presenter.acceptOrder(order);
+                  Navigator.of(context).pushNamed('/payment');
+                },
                 color: Colors.purple[200],
                 child: Text('Confirm and Pay',
                     style: GoogleFonts.openSans(fontSize: 16)),
@@ -228,10 +231,33 @@ class TrackOrderState extends State<TrackOrderPage>
 
   @override
   void onFetchOrderSuccess(Order order) {
-    if (order.status == 'review') return;
+    if (order.status == this.order.status) return;
+
     // update the order
     setState(() {
       this.order = order;
     });
+  }
+
+  @override
+  void onEditOrderError(String errorText) {
+    scaffoldkey.currentState.showSnackBar(
+        SnackBar(content: Text('Network error while trying to edit order')));
+  }
+
+  @override
+  void onEditOrderSuccess() {
+    presenter.fetchOrder(this.order.id);
+  }
+
+  @override
+  void onAcceptOrderError(String errorText) {
+    scaffoldkey.currentState.showSnackBar(
+        SnackBar(content: Text('Network error while trying to accept order')));
+  }
+
+  @override
+  void onAcceptOrderSuccess() {
+    presenter.fetchOrder(this.order.id);
   }
 }
