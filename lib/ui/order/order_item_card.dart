@@ -88,12 +88,12 @@ class OrderItemCardState extends State<OrderItemCard> {
         title: Row(
           children: <Widget>[
             Container(
-                width: 150,
+                width: 130,
                 child: Text(loadElement['title'],
                     style: GoogleFonts.openSans(
                         fontSize: 22, fontWeight: FontWeight.bold))),
             Container(
-                width: 70,
+                width: 40,
                 child: Text(loadElement['quantity'],
                     style: GoogleFonts.openSans(
                         fontSize: 18, color: Colors.grey))),

@@ -21,8 +21,7 @@ class ConfirmOrderPageState extends State<ConfirmOrderPage>
   int _addressOption = 0;
   ConfirmOrderPresenter presenter;
 
-  ConfirmOrderPageState()
-  {
+  ConfirmOrderPageState() {
     presenter = new ConfirmOrderPresenter(this);
   }
 
@@ -177,7 +176,6 @@ class ConfirmOrderPageState extends State<ConfirmOrderPage>
 
   @override
   void onCreateOrderSuccess(Order order) {
-    print(order);
-    //TODO : Navigate to the order details screen
+    Navigator.of(context).pushNamed('/trackOrder', arguments: order);
   }
 }

@@ -1,53 +1,51 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mskirana_app/ui/common/shared_bottom_bar.dart';
-import 'package:mskirana_app/ui/payment/payment_discount_view.dart';
 import 'package:mskirana_app/ui/payment/payment_type_view.dart';
 
 class PaymentPage extends StatefulWidget {
-
   final defaultPayments = [
     {
       "paymentName": "Credit/Debit Card, Net Banking",
-      "paymentIconUrl": "assets/logo.jpg",
+      "paymentIconUrl": "assets/credit-card.png",
       "discountText": "",
-      "selected" : 0
+      "selected": 0
     }
   ];
 
   final offerPayments = [
     {
-      "paymentName": "Mobikwik Wallet",
-      "paymentIconUrl": "assets/logo.jpg",
+      "paymentName": "Microsoft Wallet",
+      "paymentIconUrl": "assets/microsoft_pay.png",
       "discountText": "Rs 100 Super Cash. Minimum order Rs 800",
-      "selected" : 1
+      "selected": 1
     },
     {
       "paymentName": "Paytm",
-      "paymentIconUrl": "assets/logo.jpg",
+      "paymentIconUrl": "assets/paytm.png",
       "discountText": "Rs 75 cashback, min order Rs 1300. Use code:PAYTMBACK",
-      "selected" : 2
+      "selected": 2
     },
     {
-      "paymentName": "Credit/Debit Card, Net Banking",
-      "paymentIconUrl": "assets/logo.jpg",
-      "discountText": "Rs 100 CB, min order Rs.1000 on first Airtel txn.",
-      "selected" : 3
+      "paymentName": "Google Pay",
+      "paymentIconUrl": "assets/google.png",
+      "discountText": "Rs 50 off on first Google Pay transaction",
+      "selected": 3
     },
     {
-      "paymentName": "PayZapp",
-      "paymentIconUrl": "assets/logo.jpg",
-      "discountText": "20% CB,min order Rs 600. Use GROCERY on PayZapp page",
-      "selected" : 4
+      "paymentName": "Paypal",
+      "paymentIconUrl": "assets/paypal.png",
+      "discountText": "20% CB,min order Rs 600. Use GROCERY on Paypal page",
+      "selected": 4
     }
   ];
 
   final otherOptions = [
     {
       "paymentName": "Cash on Delivery/ Sodexo /Ticket Restaurant",
-      "paymentIconUrl": "assets/logo.jpg",
+      "paymentIconUrl": "assets/cash-on-delivery.png",
       "discountText": "",
-      "selected" : 5
+      "selected": 5
     }
   ];
 
@@ -78,7 +76,7 @@ class PaymentPageState extends State<PaymentPage> {
                                     fontSize: 18, fontWeight: FontWeight.bold)),
                             Text('Rs 215',
                                 style: GoogleFonts.openSans(
-                                    fontSize: 18,fontWeight: FontWeight.bold)),
+                                    fontSize: 18, fontWeight: FontWeight.bold)),
                           ]),
                       SizedBox(height: 10),
                       Row(
@@ -119,7 +117,7 @@ class PaymentPageState extends State<PaymentPage> {
                               padding: EdgeInsets.fromLTRB(60, 10, 60, 10),
                               child: RaisedButton(
                                   onPressed: () {
-                                    
+                                    Navigator.of(context).pop();
                                   },
                                   color: Color(0XFF9378FF),
                                   child: Text('Pay Now',
@@ -128,7 +126,6 @@ class PaymentPageState extends State<PaymentPage> {
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
                                           BorderRadius.circular(60)))))
-
                     ]))));
   }
 }
