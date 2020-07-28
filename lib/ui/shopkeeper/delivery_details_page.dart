@@ -3,8 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mskirana_app/ui/login/login_bottom_app_bar.dart';
 
 class DeliveryDetailsPage extends StatelessWidget {
+  final List<String> customerDeliveryDetails;
   final _formKey = GlobalKey<FormState>();
 
+  DeliveryDetailsPage(this.customerDeliveryDetails);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,11 +26,29 @@ class DeliveryDetailsPage extends StatelessWidget {
                       textAlign: TextAlign.left)),
               Padding(
                   padding: EdgeInsets.only(left: 19, right: 56),
-                  child: Text("Enter the Delivery Person Details",
+                  child: Container(
+                      child: Text("Enter the Delivery Person Details",
+                          style: GoogleFonts.redHatDisplay(
+                              fontSize: 16,
+                              fontWeight: FontWeight.normal,
+                              color: Color.fromRGBO(153, 135, 157, 100))))),
+              SizedBox(height: 10),
+              Padding(
+                  padding: EdgeInsets.only(left: 19, right: 56),
+                  child: Text(customerDeliveryDetails[0],
                       style: GoogleFonts.redHatDisplay(
-                          fontSize: 16,
+                          fontSize: 20,
                           fontWeight: FontWeight.normal,
-                          color: Colors.purple[100]))),
+                          color: Colors.black))),
+              SizedBox(height: 10),
+              Padding(
+                  padding: EdgeInsets.only(left: 19, right: 56),
+                  child: Text(
+                      "Delivery Address:  " + customerDeliveryDetails[1],
+                      style: GoogleFonts.redHatDisplay(
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                          color: Color.fromRGBO(116, 105, 118, 100)))),
               SizedBox(height: 10),
               Padding(
                   padding: EdgeInsets.only(left: 20),
