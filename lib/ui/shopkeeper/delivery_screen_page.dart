@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mskirana_app/ui/login/login_bottom_app_bar.dart';
+import 'package:mskirana_app/utils/validator.dart';
 
 class DeliveryScreenPage extends StatelessWidget {
   final List<String> customerDeliveryDetails;
@@ -27,7 +28,7 @@ class DeliveryScreenPage extends StatelessWidget {
               Padding(
                   padding: EdgeInsets.only(left: 19, right: 56),
                   child: Container(
-                      child: Text("Enter the Delivery Person Details",
+                      child: Text("Request Order to be Market Complete",
                           style: GoogleFonts.redHatDisplay(
                               fontSize: 16,
                               fontWeight: FontWeight.normal,
@@ -59,7 +60,7 @@ class DeliveryScreenPage extends StatelessWidget {
                           Align(
                               alignment: Alignment.centerLeft,
                               child: Container(
-                                  child: Text("Delivery Person Name",
+                                  child: Text("Comments*",
                                       style: GoogleFonts.redHatDisplay(
                                           fontSize: 16,
                                           fontWeight: FontWeight.normal)))),
@@ -67,70 +68,17 @@ class DeliveryScreenPage extends StatelessWidget {
                               alignment: Alignment.centerLeft,
                               child: Container(
                                 child: SizedBox(
-                                    height: 34,
+                                    height: 200,
                                     width: 330,
                                     child: new TextFormField(
+                                        validator: (value) {
+                                          if (value.isEmpty) {
+                                            return 'Please put some comments';
+                                          }
+                                          return null;
+                                        },
                                         keyboardType: TextInputType.text,
-                                        decoration: InputDecoration(
-                                            filled: true,
-                                            fillColor: Colors.white,
-                                            border: new OutlineInputBorder(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                const Radius.circular(0.0),
-                                              ),
-                                              borderSide: new BorderSide(
-                                                color: Colors.black,
-                                                width: 1.0,
-                                              ),
-                                            )))),
-                              )),
-                          SizedBox(height: 30),
-                          Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                  child: Text("Contact Number",
-                                      style: GoogleFonts.redHatDisplay(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal)))),
-                          Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                child: SizedBox(
-                                    height: 34,
-                                    width: 330,
-                                    child: new TextFormField(
-                                        keyboardType: TextInputType.text,
-                                        decoration: InputDecoration(
-                                            filled: true,
-                                            fillColor: Colors.white,
-                                            border: new OutlineInputBorder(
-                                              borderRadius:
-                                                  const BorderRadius.all(
-                                                const Radius.circular(0.0),
-                                              ),
-                                              borderSide: new BorderSide(
-                                                color: Colors.black,
-                                                width: 1.0,
-                                              ),
-                                            )))),
-                              )),
-                          SizedBox(height: 30),
-                          Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                  child: Text("Estimated Delivery Time",
-                                      style: GoogleFonts.redHatDisplay(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.normal)))),
-                          Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                child: SizedBox(
-                                    height: 34,
-                                    width: 330,
-                                    child: new TextFormField(
-                                        keyboardType: TextInputType.text,
+                                        maxLines: 10,
                                         decoration: InputDecoration(
                                             filled: true,
                                             fillColor: Colors.white,
@@ -151,13 +99,11 @@ class DeliveryScreenPage extends StatelessWidget {
                               height: 50,
                               child: RaisedButton(
                                   onPressed: () {
-                                    // // if phone number is valid, notify parent!
-                                    // if (_formKey.currentState.validate()) {
-                                    //   Navigator.of(context).pushReplacementNamed('/home');
-                                    // }
+                                    // if phone number is valid, notify parent!
+                                    if (_formKey.currentState.validate()) {}
                                   },
                                   color: Color(0XFF9378FF),
-                                  child: Text('Submit',
+                                  child: Text('Complete',
                                       style: GoogleFonts.openSans(
                                           color: Colors.white, fontSize: 20)),
                                   shape: RoundedRectangleBorder(
