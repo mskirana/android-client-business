@@ -9,7 +9,7 @@ class Product {
       {@required this.title,
       this.quantity,
       this.price = 0,
-      this.available = false});
+      this.available = true});
 
   String toString() {
     return title;
@@ -20,5 +20,9 @@ class Product {
     if (json.containsKey("price")) p.price = json["price"];
     if (json.containsKey("available")) p.available = json["available"];
     return p;
+  }
+
+  Map<String, dynamic> toJson() {
+    return {'title': title, 'quantity': quantity};
   }
 }

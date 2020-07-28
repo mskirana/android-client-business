@@ -5,10 +5,10 @@ import 'package:mskirana_app/models/order.dart';
 import 'package:mskirana_app/utils/misc.dart';
 import 'package:intl/intl.dart';
 
-class TrackOrderItem extends StatelessWidget {
+class TrackOrdersItem extends StatelessWidget {
   final Order order;
 
-  TrackOrderItem(this.order);
+  TrackOrdersItem(this.order);
 
   String getProductsHint() {
     String products = order.products.join(", ");
@@ -24,12 +24,24 @@ class TrackOrderItem extends StatelessWidget {
         width: double.maxFinite,
         child: Card(
           child: ListTile(
+            onTap: () {
+              Navigator.of(context).pushNamed('/trackOrder', arguments: order);
+            },
             title: Text(getProductsHint(),
                 style: GoogleFonts.openSans(
                     fontSize: 18, fontWeight: FontWeight.bold)),
-            trailing: Text(
-                DateFormat('d/M hh:mm a').format(getTimeStampFromId(order.id)),
-                style: GoogleFonts.openSans(fontSize: 12)),
+            trailing: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text(
+                      DateFormat('d/M hh:mm a')
+                          .format(getTimeStampFromId(order.id)),
+                      style: GoogleFonts.openSans(fontSize: 12)),
+                  SizedBox(height: 10),
+                  Text("Vijay Stores",
+                      style: GoogleFonts.openSans(fontSize: 12))
+                ]),
             subtitle: Text(order.status,
                 style: GoogleFonts.openSans(
                     fontSize: 12, fontStyle: FontStyle.italic)),
